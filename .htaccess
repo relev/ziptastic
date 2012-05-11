@@ -1,0 +1,46 @@
+
+# Turn on Expires and set default to 0
+ExpiresActive On
+ExpiresDefault A0
+
+<FilesMatch "\.(ico|pdf|flv)$">
+#Header set Cache-Control "max-age=604800, public"
+ExpiresDefault A29030400
+Header append Cache-Control "public"
+</FilesMatch>
+
+<FilesMatch "\.(jpg|jpeg|png|gif|swf)$">
+#Header set Cache-Control "max-age=604800, public"
+ExpiresDefault A604800
+Header append Cache-Control "public"
+</FilesMatch>
+
+<FilesMatch "\.(xml|txt|css|js)$">
+#Header set Cache-Control "max-age=31536000, proxy-revalidate"
+
+ExpiresDefault A604800
+Header append Cache-Control "proxy-revalidate"
+
+</FilesMatch>
+
+<FilesMatch "\.(html|htm|php)$">
+#Header set Cache-Control "max-age=600, private, proxy-revalidate"
+ExpiresActive Off
+Header set Cache-Control "private, no-cache, no-store, proxy-revalidate, no-transform"
+Header set Pragma "no-cache"
+</FilesMatch>
+
+<IfModule mod_deflate.c>
+<FilesMatch "\.(js|css)$">
+SetOutputFilter DEFLATE
+</FilesMatch>
+</IfModule>
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} ^/?$
+RewriteRule .* /ziptastic_street.html [L]
+
+# close access for Git directory
+RewriteRule ^(.*/)?\.git/ - [F]
+
