@@ -17,13 +17,13 @@ function find_street( $street = false )
     {
         db_connect();
         mysql_query( 'set group_concat_max_len=1024*1024' );
-        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(IF(region='МОСКВА','Московская область,Москва',IF(region='САНКТ-ПЕТЕРБУРГ','Ленинградская область,Санкт-Петербург',CONCAT(region,',',city))),',',zip,IF(autonom=''&&area='','',CONCAT(',',autonom,',',area))) ORDER BY city,region SEPARATOR ';') AS localities  FROM ziptastic_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
+        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,IF(autonom=''&&area='','',CONCAT(',',autonom,',',area))) ORDER BY city,region SEPARATOR ';') AS localities  FROM ziptastic_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
         if ( $resource )
         {
             while( $row = mysql_fetch_assoc($resource) )
             {
-                $row['localities'] = prepare_localities($row['localities']);
-                $row['type_short'] = prepare_type_short($row['type_short']);
+//                $row['localities'] = prepare_localities($row['localities']);
+//                $row['type_short'] = prepare_type_short($row['type_short']);
                 $res[] = $row;
             }
         }
@@ -74,6 +74,7 @@ function prepare_type_short( $type_short )
         : $type_short.'.';
 }
 
+/*
 function prepare_localities( $localities )
 {
     $locality = mb_split( ';', $localities );
@@ -91,16 +92,33 @@ function prepare_locality($locality)
     $city   = prepare_city( $city );
     return implode( ',', array( $region, $city, $zip ) );
 }
+*/
+
+$FIX_REGIONS = array(
+' Область' => ' область',
+' Край' => ' край',
+'якутия' => 'Якутия',
+'балкарская' => 'Балкарская',
+'черкесская' => 'Черкесская',
+'алания' => 'Алания',
+);
 
 function prepare_region( $region )
 {
-    $region = mb_uc_first($region);
-    if ( mb_strpos( $region, 'республика' ) !== false )
+    global $FIX_REGIONS, $SEEN;
+
+    $r = mb_uc_words( $region );
+    if ( mb_strpos( $r, 'Респу' ) !== false && mb_strpos( $r, 'ская ' ) === false )
     {
-        $region = str_replace( ' республика', '', $region );
-        $region = 'Республика '.$region;
+        $r = str_replace( ' Республика', '', $r );
+        $r = str_replace( ' Республи', '', $r );
+        $r = 'Республика '.$r;
     }
-    return $region;
+
+    foreach ( $FIX_REGIONS as $k => $v )
+        $r = str_replace( $k, $v, $r );
+
+    return $r;
 }
 
 function prepare_city( $city )
@@ -119,7 +137,44 @@ function array_compact( $array )
     return $array;
 }
 
+function fix_region_city()
+{
+    db_connect();
+    $resource = mysql_query( 'SELECT * FROM PIndx07 WHERE region NOT LIKE "%а%"' );
+    while( $row = mysql_fetch_assoc($resource) )
+    {
+        if ( !$row['city'] )
+        {
+            list( $region, $city ) = $row['region'] == 'МОСКВА'
+                ? array( 'Московская область', 'Москва' )
+                : array( 'Ленинградская область', 'Санкт-Петербург' );
+        }
+        else
+        {
+            $region = prepare_region($row['region']);
+            $city   = prepare_city($row['city']);
+        }
+        mysql_query( sprintf( 'UPDATE PIndx07 SET region="%s", city="%s" WHERE zip=%d', $region, $city, $row['zip'] ) );
+    }
+}
+
+function fix_type_short()
+{
+    db_connect();
+    mysql_query( 'UPDATE ziptastic_street SET type_short = CONCAT(type_short,".") WHERE LENGTH(type_short)<15 AND type_short NOT LIKE "%-%" AND type_short NOT LIKE "%."' );
+}
+
 $query = addslashes( $_GET['q'] );
+
+/*
+if ( $query == 'fix' )
+{
+//    fix_region_city();
+//    fix_type_short();
+    print 'fix';
+    exit;
+}
+*/
 
 $res = preg_match('/^\d{6}$/', $query )
          ? find_zip( $query )
