@@ -125,14 +125,14 @@
                         }
 
                         var ziptasticBox = $(document.createElement("span")).addClass("ziptastic-box");
-                        var ziptasticSelecter = $(document.createElement("span")).addClass("ziptastic-selecter");
+                        var ziptasticSelector = $(document.createElement("span")).addClass("ziptastic-selector");
 
                         ziptasticBox.append('<span class="ziptastic-street">' + fullStreetName + ': </span>');
 
-                        ziptasticSelecter.append(cities.join(", "));
-                        ziptasticBox.append(ziptasticSelecter);
+                        ziptasticSelector.append(cities.join(", "));
+                        ziptasticBox.append(ziptasticSelector);
 
-                        ziptasticSelecter.find("span").click(function(e) {
+                        ziptasticSelector.find("span").click(function(e) {
                             e.stopPropagation();
                             opt.street.trigger( $.Event("keydown",  { keyCode: 27 }) )
 
