@@ -17,7 +17,7 @@ function find_street( $street = false )
     {
         db_connect();
         mysql_query( 'set group_concat_max_len=1024*1024' );
-        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,IF(autonom=''&&area='','',CONCAT(',',autonom,',',area))) ORDER BY city,region SEPARATOR ';') AS localities  FROM ziptastic_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
+        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY zip SEPARATOR ';') AS localities  FROM ziptastic_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
         if ( $resource )
         {
             while( $row = mysql_fetch_assoc($resource) )
@@ -39,7 +39,7 @@ function find_zip( $zip = 0 )
     if ( $zip > 0 )
     {
         db_connect();
-        $resource = mysql_query( "SELECT zip, region, autonom, area, city, city_1 FROM PIndx07 WHERE zip=$zip" );
+        $resource = mysql_query( "SELECT zip, region, area, IF(city_1='',city,CONCAT(city,' (',city_1,')')) AS city FROM PIndx07 WHERE zip=$zip" );
         if ( $resource )
             $res = mysql_fetch_assoc( $resource );
     }
