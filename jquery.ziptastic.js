@@ -24,7 +24,7 @@
             }
 
             var getStreetType = function(data) {
-                return data.type_short + (data.type_short.length < 4 && data.type_short != 'пр-кт' ? '.' : '');
+                return data.type_short + (data.type_short.length < 4 && data.type_short != 'б-р' ? '.' : '');
             }
 
             var cityName = function(text) {
