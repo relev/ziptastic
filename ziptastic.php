@@ -140,6 +140,7 @@ function array_compact( $array )
 function fix_region_city()
 {
     db_connect();
+// truncate table PIndx07; insert into PIndx07 select * from PIndx07_all;
     $resource = mysql_query( 'SELECT * FROM PIndx07 WHERE region NOT LIKE "%а%"' );
     while( $row = mysql_fetch_assoc($resource) )
     {
@@ -154,7 +155,9 @@ function fix_region_city()
             $region = prepare_region($row['region']);
             $city   = prepare_city($row['city']);
         }
-        mysql_query( sprintf( 'UPDATE PIndx07 SET region="%s", city="%s" WHERE zip=%d', $region, $city, $row['zip'] ) );
+        $city_1 = $row['city_1'] ? prepare_city($row['city_1']) : '';
+        $area   = $row['area']   ? mb_uc_first($row['area'])    : '';
+        mysql_query( sprintf( 'UPDATE PIndx07 SET region="%s", city="%s", city_1="%s", area="%s" WHERE zip=%d', $region, $city, $city_1, $area, $row['zip'] ) );
     }
 }
 
