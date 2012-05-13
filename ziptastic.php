@@ -169,15 +169,15 @@ function fix_type_short()
 
 $query = addslashes( $_GET['q'] );
 
-/*
-if ( $query == 'fix' )
+/** /
+if ( true || $query == 'fix' )
 {
-//    fix_region_city();
+    fix_region_city();
 //    fix_type_short();
     print 'fix';
     exit;
 }
-*/
+/**/
 
 $res = preg_match('/^\d{6}$/', $query )
          ? find_zip( $query )
