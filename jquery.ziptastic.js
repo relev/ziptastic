@@ -23,18 +23,6 @@
                 return new RegExp(type);
             }
 
-            var getStreetType = function(data) {
-                return data.type_short + (data.type_short.length < 4 && data.type_short != 'б-р' ? '.' : '');
-            }
-
-            var cityName = function(text) {
-                return text.replace(/([^-\s])([^-\s]*)/ig, function($0, $1, $2) { return $1.toUpperCase() + $2.toLowerCase(); }).replace("-На-", "-на-");
-            }
-
-            var regionName = function(text) {
-                return text.replace(/([^-\s])(.*)/ig, function($0, $1, $2) { return $1.toUpperCase() + $2.toLowerCase(); }).replace("-На-", "-на-");
-            }
-
             var showData = function(inputData, street) {
                 street = street || "";
                 var data = {};
@@ -52,12 +40,12 @@
 
 
                 if( data.city && opt.city.length )
-                    opt.city.val( cityName(data.city) );
+                    opt.city.val( data.city );
 
                 if( data.region && opt.region.length )
-                    opt.region.val( regionName(data.region) );
+                    opt.region.val( data.region );
 
-                if( opt.street.length )
+                if( street && opt.street.length )
                     opt.street.val( street );
 
             };
@@ -95,8 +83,8 @@
                     scrollHeight: 300,
                     width: 500,
                     formatItem: function(data, i, max, value) {
-                        var fullStreetName = '<span class="ziptastic-street-type">' + getStreetType(data) + '</span> ' + value;
-                        var fullStreetNameText = getStreetType(data) + " "+ value;
+                        var fullStreetName = '<span class="ziptastic-street-type">' + data.type_short + '</span> ' + value;
+                        var fullStreetNameText = data.type_short + " "+ value;
                         var links = data.localities.split(";");
                         var locations = [];
                         for( var k=0; k < links.length; k++ ) {
@@ -111,7 +99,6 @@
                         }
                         var cities = [];
                         for(var i in locations) {
-                            var s = cityName(i);
 
                             var zipcodes = [];
                             if( locations[i].length > 1 ) {
@@ -121,7 +108,7 @@
                                 zipcodes = ' <span class="ziptastic-zipcode-list">(' + zipcodes.join(', ') + ')</span>';
                             }
 
-                            cities.push( '<span class="ziptastic-city">' + s + '</span>' + zipcodes );
+                            cities.push( '<span class="ziptastic-city">' + i + '</span>' + zipcodes );
                         }
 
                         var ziptasticBox = $(document.createElement("span")).addClass("ziptastic-box");
@@ -156,7 +143,7 @@
                                 parsed[k] = {
                                     data: data[k],
                                     value: data[k].name,
-                                    result: getStreetType(data[k]) + " " + data[k].name
+                                    result: data[k].type_short + " " + data[k].name
                                 }
                             }
                         return parsed;
@@ -175,7 +162,7 @@
                 });
 
                 opt.street.result(function(event, data, value) {
-                    var fullStreetName = getStreetType(data) + " " + value;
+                    var fullStreetName = data.type_short + " " + value;
                     showData(data.localities, fullStreetName);
                 });
             }
