@@ -3,7 +3,7 @@
     cursor: pointer;
 }
 
-.ziptastic-city:hover, .ziptastic-zipcode:hover {
+.ziptastic-hover {
     background-color: #bad6ff;
 }
 

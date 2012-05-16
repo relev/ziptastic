@@ -128,6 +128,14 @@
                             if( data )
                                 showData(data[0], fullStreetNameText);
                         });
+
+                        ziptasticSelector.find(".ziptastic-zipcode, .ziptastic-city")
+                                         .hover(function(){
+                                            $(this).addClass("ziptastic-hover");
+                                         }, function(){
+                                            $(this).removeClass("ziptastic-hover");
+                                         });
+
                         return  ziptasticBox;
                     },
                     formatResult: function(data, value) {
@@ -533,28 +541,42 @@ $.Autocompleter = function(input, options) {
 			$.each(options.extraParams, function(key, param) {
 				extraParams[key] = typeof param == "function" ? param() : param;
 			});
-			
-			$.ajax({
-				// try to leverage ajaxQueue plugin to abort previous requests
-				mode: "abort",
-				// limit abortion to this input
-				port: "autocomplete" + input.name,
-				dataType: options.dataType,
-				url: options.url,
-				data: $.extend({
-					q: lastWord(term),
-					limit: options.max
-				}, extraParams),
-				success: function(data) {
-					var parsed = options.parse && options.parse(data) || parse(data);
-					cache.add(term, parsed);
-					success(term, parsed);
-				},
-                error: function() {
-                    select.emptyList();
-                    failure(term);
-                }
-			});
+
+            if( !$.browser.msie ) {
+                $.ajax({
+                    // try to leverage ajaxQueue plugin to abort previous requests
+                    mode: "abort",
+                    // limit abortion to this input
+                    port: "autocomplete" + input.name,
+                    dataType: options.dataType,
+                    url: options.url,
+                    data: $.extend({
+                        q: lastWord(term),
+                        limit: options.max
+                    }, extraParams),
+                    success: function(data) {
+                        var parsed = options.parse && options.parse(data) || parse(data);
+                        cache.add(term, parsed);
+                        success(term, parsed);
+                    },
+                    error: function() {
+                        select.emptyList();
+                        failure(term);
+                    }
+                });
+            } else {
+                $.getJSON(options.url + "?callback=?",
+                    $.extend({
+                        q: lastWord(term),
+                        limit: options.max
+                    }, extraParams),
+                    function(data) {
+                        var parsed = options.parse && options.parse(data) || parse(data);
+                        cache.add(term, parsed);
+                        success(term, parsed);
+                    }
+                );
+            }
 		} else {
 			// if we have a failure, we need to empty the list -- this prevents the the [TAB] key from selecting the last successful match
 			select.emptyList();
