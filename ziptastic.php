@@ -17,7 +17,8 @@ function find_street( $street = false )
     {
         db_connect();
         mysql_query( 'set group_concat_max_len=1024*1024' );
-        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY zip SEPARATOR ';') AS localities  FROM ziptastic_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
+        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY zip SEPARATOR ';') AS localities FROM ziptastic_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
+#        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY zip SEPARATOR ';') AS localities FROM PIndx07 LEFT JOIN ziptastic_street USING(zip) WHERE zip=$street GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
         if ( $resource )
         {
             while( $row = mysql_fetch_assoc($resource) )
@@ -179,6 +180,52 @@ if ( true || $query == 'fix' )
 }
 /**/
 
+mb_internal_encoding('UTF-8');
+$query = mb_strtolower($query,'UTF-8');
+
+$chars = array(
+'q' => 'й',
+'w' => 'ц',
+'e' => 'у',
+'r' => 'к',
+'t' => 'е',
+'y' => 'н',
+'u' => 'г',
+'i' => 'ш',
+'o' => 'щ',
+'p' => 'з',
+'[' => 'х',
+']' => 'ъ',
+'a' => 'ф',
+'s' => 'ы',
+'d' => 'в',
+'f' => 'а',
+'g' => 'п',
+'h' => 'р',
+'j' => 'о',
+'k' => 'л',
+'l' => 'д',
+';' => 'ж',
+"'" => 'э',
+'z' => 'я',
+'x' => 'ч',
+'c' => 'с',
+'v' => 'м',
+'b' => 'и',
+'n' => 'т',
+'m' => 'ь',
+',' => 'б',
+'.' => 'ю',
+);
+
+//if ( mb_ereg_match( '/[^а-яё]/' )
+//$query = ' te,st '; 
+//$query = mb_ereg_replace( '([^а-яё])', '1', $query, 'eg' );
+//print $query;
+if ( mb_ereg_match( '.*[^а-яё]', $query ) )
+    foreach ( $chars as $k => $v )
+        $query = str_replace( $k, $v, $query );
+
 $res = preg_match('/^\d{6}$/', $query )
          ? find_zip( $query )
          : ( ( mb_strlen( $query ) < 2 || preg_match( '/\d.*\d.*\d/', $query ) ) 
@@ -191,8 +238,8 @@ header('Content-Type: application/json; charset=utf-8', TRUE);
 if ( !empty($res) )
 {
 //print_r($res); exit;
-
-    $json = json_encode(array_compact($res));
+#    $json = json_encode(array( 'query' => $query, 'matches' => array_compact($res));
+    $json = json_encode( array_compact($res) );
     $out = $_GET['callback'] 
               ? sprintf( '%s(%s);', $_GET['callback'], $json )
               : $json;
