@@ -32,13 +32,18 @@
 
 
 
+<hr width="170px" align="left">Условия бесплатного использования:
+1. узнаваемый логотип ziptastic
+   около поля ввода улицы
+2. приветствуется ссылка на
+   <a href="http://explore.to">Explore.To</a>
+   (проект бегает на их железе)
 
 
 
 
 
-<hr width="170px" align="left">
-Powered by <a href="http://explore.to">Explore.To</a>
+<hr width="170px" align="left">Powered by <a href="http://explore.to">Explore.To</a>
 </pre>
 </td>
 <td valign="top" width="100%">
@@ -50,7 +55,7 @@ Powered by <a href="http://explore.to">Explore.To</a>
   </ul>
   <div id="tabs-1">
     <ol>
-      <li> В блоке &lt;HEAD&gt;, перед самым его закрытием, указать<br>
+      <li> В блоке &lt;HEAD&gt;, перед самым его закрытием, надо указать<br>
         <textarea rows="6" cols="60">
 <link type="text/css" href="http://ziptastic.ru/ziptastic.css" media="screen" rel="stylesheet" />
 <script type="text/javascript" src="http://ziptastic.ru/jquery/js/jquery-1.7.2.min.js"></script>
@@ -86,10 +91,29 @@ Powered by <a href="http://explore.to">Explore.To</a>
     </ol>
   </div>
   <div id="tabs-2">
-    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+    <ol>
+      <li>Необходимо прочитать содержимое вкладки "НЕ знаю Javascript"</a>
+      <li>Базовый навык JS предоставляет некоторое удобство в конфигурировании.<br>
+          В частности, можно указать свои идентификаторы полей ввода
+          для отслеживания ziptastic.
+        <p>Делается это так:
+        <p>...
+    </ol>
   </div>
   <div id="tabs-3">
-
+    <ol>
+      <li>Содержимое этого раздела предполагает знакомство с содержанием других табов.
+      <li>Данный jquery-плагин (<a href="jquery.ziptastic.js"><i>jquery.ziptastic.js</i></a>) реализован с использованием autocomplete.
+          Он использует данные, отдаваемые сервисом<br>
+<code>http://ziptastic.ru/ziptastic.php?q=<i>улица</i>|<i>индекс</i></code>, например<br>
+<code><a href="http://ziptastic.ru/ziptastic.php?q=Сове" target="_blank">http://ziptastic.ru/ziptastic.php?q=Сове</a></code><br>
+<code><a href="http://ziptastic.ru/ziptastic.php?q=432063" target="_blank">http://ziptastic.ru/ziptastic.php?q=432063</a></code>
+      <li>Упомянутый jquery-плагин и php-service написаны на скорую руку "для проверки концепции", но вроде работают. Пожелания и дополнения приветствуются, особенно в виде <code>pull request</code> в <a href="http://github.com/relev/ziptastic">репозиторий на github</a>, или написании других способов отображения результатов, возвращаемых сервисом.
+      <li>В ближайшем будущем планируется переехать с MySQL на Redis, тогда задержка ответов станет ещё короче.
+      <li>Сервис хостится на Amazon, со всеми плюсами и минусами.
+      <li>HTTP API (lev)
+      <li>Данные, которыми оперирует сервис, собраны на основе KLADR, фактически единственное отличие - правильный upcase, так что особого смысла выкачивать базу через HTTP нет.
+    </ol>
   </div>
 </div>
 
