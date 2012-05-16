@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains PhpStorm.
- * User: Unlimit
- * Date: 28.04.12
- * Time: 14:43
- * To change this template use File | Settings | File Templates.
- */
 (function($) {
     $.extend({
         zipstatic: function(options) {

@@ -142,6 +142,7 @@ function fix_region_city()
 {
 
 $i = 100;
+
 $cities = array(
 'Москва'          => 10,
 'Санкт-Петербург' => 20,
