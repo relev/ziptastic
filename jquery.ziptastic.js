@@ -1,7 +1,7 @@
 (function($) {
     $.extend({
         zipstatic: function(options) {
-            var serviceUrl = "http://ziptastic.ru/ziptastic.php";
+            var serviceUrl = "http://ziptastic.ru/api/v1";
             var opt = $.extend({
                 callback: function(e) {},
                 zipcode: "#ziptastic_zip",
