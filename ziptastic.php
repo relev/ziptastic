@@ -17,7 +17,7 @@ function find_street( $street = false )
     {
         db_connect();
         mysql_query( 'set group_concat_max_len=1024*1024' );
-        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY zip SEPARATOR ';') AS localities FROM ziptastic_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
+        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY city_weight, zip SEPARATOR ';') AS localities FROM ziptastic_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
 #        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY zip SEPARATOR ';') AS localities FROM PIndx07 LEFT JOIN ziptastic_street USING(zip) WHERE zip=$street GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
         if ( $resource )
         {
@@ -140,8 +140,43 @@ function array_compact( $array )
 
 function fix_region_city()
 {
+
+$i = 100;
+$cities = array(
+'Москва'          => 10,
+'Санкт-Петербург' => 20,
+'Архангельск'   => $i++,
+'Барнаул'       => $i++,
+'Брянск'        => $i++,
+'Владивосток'   => $i++,
+'Волгоград'     => $i++,
+'Воронеж'       => $i++,
+'Екатеринбург'  => $i++,
+'Ижевск'        => $i++,
+'Иркутск'       => $i++,
+'Казань'        => $i++,
+'Кемерово'      => $i++,
+'Краснодар'     => $i++,
+'Красноярск'    => $i++,
+'Львовский'     => $i++,
+'Нижний Новгород' => $i++,
+'Новосибирск'   => $i++,
+'Омск'          => $i++,
+'Пермь'         => $i++,
+'Ростов-на-Дону'=> $i++,
+'Самара'        => $i++,
+'Саратов'       => $i++,
+'Сочи'          => $i++,
+'Тверь'         => $i++,
+'Тюмень'        => $i++,
+'Ульяновск'     => $i++,
+'Уфа'           => $i++,
+'Челябинск'     => $i++,
+'Ярославль'     => $i++,
+);
+
     db_connect();
-// truncate table PIndx07; insert into PIndx07 select * from PIndx07_all;
+// drop table PIndx07; create table PIndx07 like PIndx07_all; insert into PIndx07 select * from PIndx07_all; alter table PIndx07 add column city_weight int unsigned not null default 1000;
     $resource = mysql_query( 'SELECT * FROM PIndx07 WHERE region NOT LIKE "%а%"' );
     while( $row = mysql_fetch_assoc($resource) )
     {
@@ -158,7 +193,8 @@ function fix_region_city()
         }
         $city_1 = $row['city_1'] ? prepare_city($row['city_1']) : '';
         $area   = $row['area']   ? mb_uc_first($row['area'])    : '';
-        mysql_query( sprintf( 'UPDATE PIndx07 SET region="%s", city="%s", city_1="%s", area="%s" WHERE zip=%d', $region, $city, $city_1, $area, $row['zip'] ) );
+        $city_weight = $cities[$city] ? $cities[$city] : 1000;
+        mysql_query( sprintf( 'UPDATE PIndx07 SET region="%s", city="%s", city_1="%s", city_weight=%d, area="%s" WHERE zip=%d', $region, $city, $city_1, $city_weight, $area, $row['zip'] ) );
     }
 }
 
