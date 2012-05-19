@@ -12,7 +12,7 @@ var ZIPTASTIC_OPTIONS;
                 region: "#ziptastic_region",
                 autonomy: "#ziptastic_autonomy",
                 city: "#ziptastic_city"
-            },$.extend(ZIPTASTIC_OPTIONS || {},options) );
+            },( options || {} ) );
             var getStreetTypeRegexp = function() {
                 var type = "ул|пер|пл|проезд|б-р|тер|туп|аллея|ш|пр-кт|стр|ст|мкр|наб|парк|дор|сквер|спуск";
                 return new RegExp(type);
@@ -174,7 +174,7 @@ var ZIPTASTIC_OPTIONS;
 })(jQuery);
 
 jQuery(function() {
-    jQuery.zipstatic({});
+    jQuery.zipstatic(ZIPTASTIC_OPTIONS);
 });
 
 /*
