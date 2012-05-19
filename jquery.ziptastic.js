@@ -88,6 +88,7 @@ var ZIPTASTIC_OPTIONS;
                 opt.street.autocomplete(serviceUrl, {
                     minChars: 2,
                     scroll: true,
+                    matchSubset: false,
                     scrollHeight: 300,
                     width: 500,
                     formatItem: function(data, i, max, value) {
