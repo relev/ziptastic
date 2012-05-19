@@ -106,7 +106,7 @@
           для отслеживания ziptastic.
         <p>Делается это следующим образом. Внутри HEAD, после подключения <i>jquery.ziptastic.js</i>,
            объявляется переменная <code>ZIPTASTIC_OPTIONS</code>, в которой указывается, какие поля на странице использовать для авто-заполнения. Например,<br>
-<textarea rows="13" cols="95" style="font-family: monospace; font-size: 12px; border: 0" spellcheck="false">
+<textarea rows="14" cols="95" style="font-family: monospace; font-size: 12px; border: 0" spellcheck="false">
 <head>
 ...
   <script type="text/javascript">
@@ -116,16 +116,8 @@
       zipcode:"#index",     // HTML-поле для индекса - <input type="text" id="index">
       region:"#oblast",     // HTML-поле для региона - <input type="text" id="oblast">
       street:"#ul",         // HTML-поле для улицы   - <input type="text" id="ul">
-      building:"#building", // HTML-поле для номера дома   - <input type="text" id="building">
-      area:"",              // указание ziptastic не заполнять автоматически поле района
-      callback: function(data) { ... }
-      /* callback-функция вызывается после того пользователь заполнит поле для улицы или поле индекса
-         в качестве параметра передается объект со значениями, например:
-        { city: "Ульяновск",
-          region: "Ульяновская область",
-          street: "",
-          zip: "432071" }
-      */
+      building:"#dom",      // HTML-поле для № дома  - <input type="text" id="dom">
+      area:""               // указание ziptastic не заполнять автоматически поле района
     };
   </script>
 </head></textarea>
@@ -152,6 +144,7 @@ jQuery(function() {
 });</textarea><br>
           где <code>params</code> имеет структуру, идентичную <code>ZIPTASTIC_OPTIONS</code> (см. предыдущий таб).<br>
           Первый вызов этого кода с <code>ZIPTASTIC_OPTIONS</code> в качестве параметра осуществляется плагином при загрузке.
+      <li>Если в хеше <code>ZIPTASTIC_OPTIONS</code> ключу <code>callback</code> присвоена какая-либо функция, она будет вызвана при авто-заполнении с данными оного в виде хеша.
       <li>HTTP API (TODO: дописать!)
       <li>В ближайшем будущем планируется переехать с MySQL на Redis, тогда задержка ответов станет ещё короче.
       <li>Сервис хостится на Amazon, со всеми плюсами и минусами.
