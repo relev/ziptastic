@@ -1,6 +1,9 @@
+var ZIPTASTIC_OPTIONS;
+
 (function($) {
     $.extend({
         zipstatic: function(options) {
+
             var serviceUrl = "http://ziptastic.ru/api/v1";
             var opt = $.extend({
                 callback: function(e) {},
@@ -9,8 +12,7 @@
                 region: "#ziptastic_region",
                 autonomy: "#ziptastic_autonomy",
                 city: "#ziptastic_city"
-            },options);
-
+            },$.extend(ZIPTASTIC_OPTIONS || {},options) );
             var getStreetTypeRegexp = function() {
                 var type = "ул|пер|пл|проезд|б-р|тер|туп|аллея|ш|пр-кт|стр|ст|мкр|наб|парк|дор|сквер|спуск";
                 return new RegExp(type);
