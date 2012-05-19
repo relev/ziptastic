@@ -6,6 +6,14 @@
   <link type="text/css" href="ziptastic.css" media="screen" rel="stylesheet" />
   <script type="text/javascript" src="jquery/js/jquery-1.7.2.min.js"></script>
   <script type="text/javascript" src="jquery.ziptastic.js" ></script>
+  <!-- ziptastic config
+  <script type="text/javascript">
+    var ZIPTASTIC_OPTIONS =
+    {
+      city:"#gorod",    // HTML-поле для города  - <input type="text" id="gorod">
+    };
+  </script>
+  -->
 <!-- tabs -->
   <script type="text/javascript" src="jquery/js/jquery-ui-1.8.20.custom.min.js"></script>
   <link type="text/css" href="jquery/css/cupertino/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
@@ -97,7 +105,7 @@
           В частности, можно указать свои идентификаторы полей ввода
           для отслеживания ziptastic.
         <p>Делается это следующим образом. Внутри HEAD, после подключения <i>jquery.ziptastic.js</i>,
-           объявляется переменная <code>ZIPTASTIC_OPTIONS</code>, в которой указывается, какие поля на странице использовать для авто-заполнения. Например, 
+           объявляется переменная <code>ZIPTASTIC_OPTIONS</code>, в которой указывается, какие поля на странице использовать для авто-заполнения. Например,<br>
 <textarea rows="13" cols="95" style="font-family: monospace; font-size: 12px; border: 0" spellcheck="false">
 <head>
 ...
@@ -127,9 +135,17 @@
 <code><a href="http://ziptastic.ru/api/v1/?q=сове" target="_blank">http://ziptastic.ru/api/v1/?q=сове</a></code><br>
 <code><a href="http://ziptastic.ru/api/v1/?q=432063" target="_blank">http://ziptastic.ru/api/v1/?q=432063</a></code>
       <li>Упомянутый jquery-плагин и php-service написаны на скорую руку "для проверки концепции", но вроде работают. Пожелания и дополнения приветствуются, особенно в виде <code>pull request</code> в <a href="http://github.com/relev/ziptastic">репозиторий на github</a>, или написании других способов отображения результатов, возвращаемых сервисом.
+      <li>В случае необходимости можно обслуживать несколько независимых форм ввода на одной странице,
+          вызвав необходимое число раз инициализацию плагина с нужными параметрами<br>
+<textarea rows="3" cols="35" style="font-family: monospace; font-size: 12px; border: 0" spellcheck="false">
+jQuery(function() {
+    jQuery.zipstatic(params);
+});</textarea><br>
+          где <code>params</code> имеет структуру, идентичную <code>ZIPTASTIC_OPTIONS</code> (см. предыдущий таб).<br>
+          Первый вызов этого кода с <code>ZIPTASTIC_OPTIONS</code> в качестве параметра осуществляется плагином при загрузке.
+      <li>HTTP API (TODO: дописать!)
       <li>В ближайшем будущем планируется переехать с MySQL на Redis, тогда задержка ответов станет ещё короче.
       <li>Сервис хостится на Amazon, со всеми плюсами и минусами.
-      <li>HTTP API (TODO: дописать!)
       <li>Данные, которыми оперирует сервис, собраны на основе KLADR, фактически единственное отличие - правильный upcase, так что особого смысла выкачивать базу через HTTP нет.
     </ol>
   </div>
