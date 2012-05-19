@@ -74,6 +74,7 @@ var ZIPTASTIC_OPTIONS;
 
             if( opt.street.length ) {
                 opt.street.autocomplete(serviceUrl, {
+                    minChars: 2,
                     scroll: true,
                     scrollHeight: 300,
                     width: 500,
