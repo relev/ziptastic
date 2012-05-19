@@ -112,11 +112,20 @@
   <script type="text/javascript">
     var ZIPTASTIC_OPTIONS =
     {
-      city:"#gorod",    // HTML-поле для города  - <input type="text" id="gorod">
-      zipcode:"#index", // HTML-поле для индекса - <input type="text" id="index">
-      region:"#oblast", // HTML-поле для региона - <input type="text" id="oblast">
-      street:"#ul",     // HTML-поле для улицы   - <input type="text" id="ul">
-      area:"",          // указание ziptastic не заполнять автоматически поле района
+      city:"#gorod",        // HTML-поле для города  - <input type="text" id="gorod">
+      zipcode:"#index",     // HTML-поле для индекса - <input type="text" id="index">
+      region:"#oblast",     // HTML-поле для региона - <input type="text" id="oblast">
+      street:"#ul",         // HTML-поле для улицы   - <input type="text" id="ul">
+      building:"#building", // HTML-поле для номера дома   - <input type="text" id="building">
+      area:"",              // указание ziptastic не заполнять автоматически поле района
+      callback: function(data) { ... }
+      /* callback-функция вызывается после того пользователь заполнит поле для улицы или поле индекса
+         в качестве параметра передается объект со значениями, например:
+        { city: "Ульяновск",
+          region: "Ульяновская область",
+          street: "",
+          zip: "432071" }
+      */
     };
   </script>
 </head></textarea>

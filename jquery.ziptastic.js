@@ -11,7 +11,8 @@ var ZIPTASTIC_OPTIONS;
                 street: "#ziptastic_street",
                 region: "#ziptastic_region",
                 autonomy: "#ziptastic_autonomy",
-                city: "#ziptastic_city"
+                city: "#ziptastic_city",
+                building: "#ziptastic_building"
             },( options || {} ) );
             var getStreetTypeRegexp = function() {
                 var type = "ул|пер|пл|проезд|б-р|тер|туп|аллея|ш|пр-кт|стр|ст|мкр|наб|парк|дор|сквер|спуск";
@@ -29,10 +30,10 @@ var ZIPTASTIC_OPTIONS;
                 } else {
                     data = inputData;
                 }
+                data.street = street || "";
 
                 if( data.zip && opt.zipcode.length )
                     opt.zipcode.val(data.zip);
-
 
                 if( data.city && opt.city.length )
                     opt.city.val( data.city );
@@ -43,6 +44,12 @@ var ZIPTASTIC_OPTIONS;
                 if( street && opt.street.length )
                     opt.street.val( street );
 
+                if( street && opt.building )
+                    opt.building.trigger("focus");
+                else if( opt.street.val().length == 0 )
+                    opt.street.trigger("focus");
+
+                $.isFunction(opt.callback) && opt.callback(data);
             };
 
             if( typeof opt.street  == "string" )
@@ -60,10 +67,15 @@ var ZIPTASTIC_OPTIONS;
             if( typeof opt.city  == "string" )
                 opt.city = $(opt.city);
 
+            if( typeof opt.building  == "string" )
+                opt.building = $(opt.building);
+
             if( opt.zipcode.length ) {
+                var lastZipcode = "";
                 opt.zipcode.bind("keyup", function() {
                     var zipcode = $.trim( $(this).val() );
-                    if( /^\d{6}$/.test(zipcode) ) {
+                    if( lastZipcode != zipcode && /^\d{6}$/.test(zipcode) ) {
+                        lastZipcode = zipcode;
                         $.get(serviceUrl, {q: zipcode},
                             function(data) {
                                 showData(data)
