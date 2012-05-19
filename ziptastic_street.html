@@ -2,11 +2,14 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <title>Ввод адреса с помощью ZIPtastic</title>
-  <link type="text/css" href="jquery/css/cupertino/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+<!-- ziptastic -->
   <link type="text/css" href="ziptastic.css" media="screen" rel="stylesheet" />
   <script type="text/javascript" src="jquery/js/jquery-1.7.2.min.js"></script>
-  <script type="text/javascript" src="jquery/js/jquery-ui-1.8.20.custom.min.js"></script>
   <script type="text/javascript" src="jquery.ziptastic.js" ></script>
+<!-- tabs -->
+  <script type="text/javascript" src="jquery/js/jquery-ui-1.8.20.custom.min.js"></script>
+  <link type="text/css" href="jquery/css/cupertino/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+<!-- ga -->
   <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-31653531-1']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script>
 
 </head>
@@ -56,7 +59,7 @@
   <div id="tabs-1">
     <ol>
       <li> В блоке &lt;HEAD&gt;, перед самым его закрытием, надо указать<br>
-<textarea rows="3" cols="98" style="font-family: monospace; font-size: 11px; border: 0">
+<textarea rows="3" cols="98" style="font-family: monospace; font-size: 11px; border: 0" spellcheck="false">
 <link type="text/css" href="http://ziptastic.ru/ziptastic.css" media="screen" rel="stylesheet" />
 <script type="text/javascript" src="http://ziptastic.ru/jquery/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="http://ziptastic.ru/jquery.ziptastic.js" ></script></textarea><br>
@@ -76,7 +79,7 @@
 </table>
         <br>
       <li> Пример: форма слева задаётся следующим образом:<br>
-<textarea rows="9" cols="60" style="font-family: monospace; font-size: 12px; border: 0"><pre>
+<textarea rows="9" cols="60" style="font-family: monospace; font-size: 12px; border: 0" spellcheck="false"><pre>
 <input type="text" id="ziptastic_street"> улица
 <input type="text" id="ziptastic_zip"   > индекс
 <hr width="270px" align="left">
@@ -93,22 +96,40 @@
       <li>Базовый навык JS предоставляет некоторое удобство в конфигурировании.<br>
           В частности, можно указать свои идентификаторы полей ввода
           для отслеживания ziptastic.
-        <p>Делается это так:
-        <p>...
+        <p>Делается это следующим образом. Внутри HEAD, после подключения <i>jquery.ziptastic.js</i>,
+           объявляется переменная <code>ZIPTASTIC_OPTIONS</code>, в которой указывается, какие поля на странице использовать для авто-заполнения. Например, 
+<textarea rows="13" cols="95" style="font-family: monospace; font-size: 12px; border: 0" spellcheck="false">
+<head>
+...
+  <script type="text/javascript">
+    var ZIPTASTIC_OPTIONS =
+    {
+      city:"#gorod",    // HTML-поле для города  - <input type="text" id="gorod">
+      zipcode:"#index", // HTML-поле для индекса - <input type="text" id="index">
+      region:"#oblast", // HTML-поле для региона - <input type="text" id="oblast">
+      street:"#ul",     // HTML-поле для улицы   - <input type="text" id="ul">
+      area:"",          // указание ziptastic не заполнять автоматически поле района
+    };
+  </script>
+</head></textarea>
+        <p>Не обязательно указывать идентификаторы всех полей ввода,<br>
+           достаточно только тех, которые должны отличаться от принятых по умолчанию<br>
+           (см. описание в предыдущей вкладке).
     </ol>
   </div>
   <div id="tabs-3">
     <ol>
       <li>Содержимое этого раздела предполагает знакомство с содержанием других табов.
-      <li>Данный jquery-плагин (<a href="jquery.ziptastic.js"><i>jquery.ziptastic.js</i></a>) реализован с использованием autocomplete.
+      <li>Данный jquery-плагин (<a href="jquery.ziptastic.js" target="_blank"><i>jquery.ziptastic.js</i></a>) реализован с использованием autocomplete.
           Он использует данные, отдаваемые сервисом<br>
-<code>http://ziptastic.ru/api/v1/?q=<i>улица</i>|<i>индекс</i></code>, например<br>
+<code>http://ziptastic.ru/api/v1/?q=<i>улица</i>|<i>индекс</i></code><br>
+например<br>
 <code><a href="http://ziptastic.ru/api/v1/?q=сове" target="_blank">http://ziptastic.ru/api/v1/?q=сове</a></code><br>
 <code><a href="http://ziptastic.ru/api/v1/?q=432063" target="_blank">http://ziptastic.ru/api/v1/?q=432063</a></code>
       <li>Упомянутый jquery-плагин и php-service написаны на скорую руку "для проверки концепции", но вроде работают. Пожелания и дополнения приветствуются, особенно в виде <code>pull request</code> в <a href="http://github.com/relev/ziptastic">репозиторий на github</a>, или написании других способов отображения результатов, возвращаемых сервисом.
       <li>В ближайшем будущем планируется переехать с MySQL на Redis, тогда задержка ответов станет ещё короче.
       <li>Сервис хостится на Amazon, со всеми плюсами и минусами.
-      <li>HTTP API (lev)
+      <li>HTTP API (TODO: дописать!)
       <li>Данные, которыми оперирует сервис, собраны на основе KLADR, фактически единственное отличие - правильный upcase, так что особого смысла выкачивать базу через HTTP нет.
     </ol>
   </div>
