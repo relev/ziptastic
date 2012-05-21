@@ -68,9 +68,9 @@
     <ol>
       <li> В блоке &lt;HEAD&gt;, перед самым его закрытием, надо указать<br>
 <textarea rows="3" cols="98" style="font-family: monospace; font-size: 11px; border: 0" spellcheck="false">
-<link type="text/css" href="http://adresator.ru/adresator.css" media="screen" rel="stylesheet" />
-<script type="text/javascript" src="http://adresator.ru/jquery/js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="http://adresator.ru/jquery.adresator.js" ></script></textarea><br>
+<link type="text/css" href="http://adresator.com/adresator.css" media="screen" rel="stylesheet" />
+<script type="text/javascript" src="http://adresator.com/jquery/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="http://adresator.com/jquery.adresator.js" ></script></textarea><br>
         Замечание: Если jquery уже используется, то второй раз его загружать не надо,<br>
         достаточно будет загрузить <i>adresator.css</i> и <i>jquery.adresator.js</i><br><br>
       <li> Поля формы ввода адреса должны быть такими:
@@ -131,10 +131,10 @@
       <li>Содержимое этого раздела предполагает знакомство с содержанием других табов.
       <li>Данный jquery-плагин (<a href="jquery.adresator.js" target="_blank"><i>jquery.adresator.js</i></a>) реализован с использованием autocomplete.
           Он использует данные, отдаваемые сервисом<br>
-<code>http://adresator.ru/api/v1/?q=<i>улица</i>|<i>индекс</i></code><br>
+<code>http://adresator.com/api/v1/?q=<i>улица</i>|<i>индекс</i></code><br>
 например<br>
-<code><a href="http://adresator.ru/api/v1/?q=сове" target="_blank">http://adresator.ru/api/v1/?q=сове</a></code><br>
-<code><a href="http://adresator.ru/api/v1/?q=432063" target="_blank">http://adresator.ru/api/v1/?q=432063</a></code>
+<code><a href="http://adresator.com/api/v1/?q=сове" target="_blank">http://adresator.com/api/v1/?q=сове</a></code><br>
+<code><a href="http://adresator.com/api/v1/?q=432063" target="_blank">http://adresator.com/api/v1/?q=432063</a></code>
       <li>Упомянутый jquery-плагин и php-service написаны на скорую руку "для проверки концепции", но вроде работают. Пожелания и дополнения приветствуются, особенно в виде <code>pull request</code> в <a href="http://github.com/relev/adresator">репозиторий на github</a>, или написании других способов отображения результатов, возвращаемых сервисом.
       <li>В случае необходимости можно обслуживать несколько независимых форм ввода на одной странице,
           вызвав необходимое число раз инициализацию плагина с нужными параметрами<br>
