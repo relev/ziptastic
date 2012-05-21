@@ -46,8 +46,10 @@ var ADRESATOR_OPTIONS;
 
                 if( street && opt.building )
                     opt.building.trigger("focus");
-                else if( opt.street.val().length == 0 )
+                else if( opt.street && opt.street.val().length == 0 )
                     opt.street.trigger("focus");
+                else if( opt.building && opt.building.val().length == 0 )
+                    opt.building.trigger("focus");
 
                 $.isFunction(opt.callback) && opt.callback(data);
             };
