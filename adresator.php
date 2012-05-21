@@ -10,14 +10,14 @@ function db_connect()
     mysql_select_db( DB_NAME );
 }
 
-function find_street( $street = false )
+function find_street( $street = false, $limit = 20 )
 {
     $res = array();
     if ( $street )
     {
         db_connect();
         mysql_query( 'set group_concat_max_len=1024*1024' );
-        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY city_weight, zip SEPARATOR ';') AS localities FROM adresator_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
+        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY city_weight, zip SEPARATOR ';') AS localities FROM adresator_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT $limit" );
 #        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY zip SEPARATOR ';') AS localities FROM PIndx07 LEFT JOIN adresator_street USING(zip) WHERE zip=$street GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
         if ( $resource )
         {
@@ -206,6 +206,9 @@ function fix_type_short()
 }
 
 $query = addslashes( $_GET['q'] );
+$limit = (int)$_GET['limit'];
+if ( $limit < 2 || $limit > 50 )
+    $limit = 20;
 
 /** /
 if ( true || $query == 'fix' )
@@ -267,7 +270,7 @@ $res = preg_match('/^\d{6}$/', $query )
          ? find_zip( $query )
          : ( ( mb_strlen( $query ) < 2 || preg_match( '/\d.*\d.*\d/', $query ) ) 
             ? false
-            : find_street( mb_uc_first($query) ) );
+            : find_street( mb_uc_first($query), $limit ) );
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json; charset=utf-8', TRUE);
