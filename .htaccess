@@ -38,6 +38,9 @@ SetOutputFilter DEFLATE
 
 RewriteEngine On
 
+RewriteCond %{HTTP_HOST} !^adresator\.com$
+RewriteRule .* http://adresator.com [R=301,L]
+
 RewriteCond %{REQUEST_URI} ^/api/v1
 RewriteRule .* /adresator.php?%{QUERY_STRING} [L]
 
