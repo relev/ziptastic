@@ -2,7 +2,7 @@
 
 //ini_set("display_errors", "1"); error_reporting(E_ALL ^ E_NOTICE);
 
-require( 'ziptastic_db.php' ); // DB settings for db_connect()
+require( 'adresator_db.php' ); // DB settings for db_connect()
 
 function db_connect()
 {
@@ -17,8 +17,8 @@ function find_street( $street = false )
     {
         db_connect();
         mysql_query( 'set group_concat_max_len=1024*1024' );
-        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY city_weight, zip SEPARATOR ';') AS localities FROM ziptastic_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
-#        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY zip SEPARATOR ';') AS localities FROM PIndx07 LEFT JOIN ziptastic_street USING(zip) WHERE zip=$street GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
+        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY city_weight, zip SEPARATOR ';') AS localities FROM adresator_street LEFT JOIN PIndx07 USING(zip) WHERE name LIKE '$street%' GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
+#        $resource = mysql_query( "SELECT type_short, name, GROUP_CONCAT(DISTINCT CONCAT(region,',',city,',',zip,',',area) ORDER BY zip SEPARATOR ';') AS localities FROM PIndx07 LEFT JOIN adresator_street USING(zip) WHERE zip=$street GROUP BY type_short, name ORDER BY type_weight DESC, name ASC LIMIT 20" );
         if ( $resource )
         {
             while( $row = mysql_fetch_assoc($resource) )
@@ -202,7 +202,7 @@ $cities = array(
 function fix_type_short()
 {
     db_connect();
-    mysql_query( 'UPDATE ziptastic_street SET type_short = CONCAT(type_short,".") WHERE LENGTH(type_short)<15 AND type_short NOT LIKE "%-%" AND type_short NOT LIKE "%."' );
+    mysql_query( 'UPDATE adresator_street SET type_short = CONCAT(type_short,".") WHERE LENGTH(type_short)<15 AND type_short NOT LIKE "%-%" AND type_short NOT LIKE "%."' );
 }
 
 $query = addslashes( $_GET['q'] );

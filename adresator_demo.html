@@ -1,14 +1,14 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <title>Ввод адреса с помощью ZIPtastic</title>
-<!-- ziptastic -->
-  <link type="text/css" href="ziptastic.css" media="screen" rel="stylesheet" />
+  <title>Ввод адреса с помощью Adresator</title>
+<!-- adresator -->
+  <link type="text/css" href="adresator.css" media="screen" rel="stylesheet" />
   <script type="text/javascript" src="jquery/js/jquery-1.7.2.min.js"></script>
-  <script type="text/javascript" src="jquery.ziptastic.js" ></script>
-  <!-- ziptastic config
+  <script type="text/javascript" src="jquery.adresator.js" ></script>
+  <!-- adresator config
   <script type="text/javascript">
-    var ZIPTASTIC_OPTIONS =
+    var ADRESATOR_OPTIONS =
     {
       city:"#gorod",    // HTML-поле для города  - <input type="text" id="gorod">
     };
@@ -33,18 +33,18 @@
 крупных городов РФ)
 или свой почтовый индекс (6 цифр).
 
-<input type="text" id="ziptastic_street" value="Лени"> улица
-<input type="text" id="ziptastic_zip"    value=""> индекс
+<input type="text" id="adresator_street" value="Лени"> улица
+<input type="text" id="adresator_zip"    value=""> индекс
 <hr width="270px" align="left">
-<input type="text" id="ziptastic_building" value=""> дом, строение
-<input type="text" id="ziptastic_city"     value=""> город
-<input type="text" id="ziptastic_area"     value=""> район
-<input type="text" id="ziptastic_region"   value=""> область, край
+<input type="text" id="adresator_building" value=""> дом, строение
+<input type="text" id="adresator_city"     value=""> город
+<input type="text" id="adresator_area"     value=""> район
+<input type="text" id="adresator_region"   value=""> область, край
 
 
 
 <hr width="170px" align="left">Условия бесплатного использования:
-1. узнаваемый логотип ziptastic
+1. узнаваемый логотип adresator
    около поля ввода улицы
 2. приветствуется ссылка на
    <a href="http://explore.to">Explore.To</a>
@@ -68,33 +68,33 @@
     <ol>
       <li> В блоке &lt;HEAD&gt;, перед самым его закрытием, надо указать<br>
 <textarea rows="3" cols="98" style="font-family: monospace; font-size: 11px; border: 0" spellcheck="false">
-<link type="text/css" href="http://ziptastic.ru/ziptastic.css" media="screen" rel="stylesheet" />
-<script type="text/javascript" src="http://ziptastic.ru/jquery/js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="http://ziptastic.ru/jquery.ziptastic.js" ></script></textarea><br>
+<link type="text/css" href="http://adresator.ru/adresator.css" media="screen" rel="stylesheet" />
+<script type="text/javascript" src="http://adresator.ru/jquery/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="http://adresator.ru/jquery.adresator.js" ></script></textarea><br>
         Замечание: Если jquery уже используется, то второй раз его загружать не надо,<br>
-        достаточно будет загрузить <i>ziptastic.css</i> и <i>jquery.ziptastic.js</i><br><br>
+        достаточно будет загрузить <i>adresator.css</i> и <i>jquery.adresator.js</i><br><br>
       <li> Поля формы ввода адреса должны быть такими:
 <table border="1" cellpadding="1" cellspacing="0">
 <tr><td>Часть адреса</td><td>Поле ввода</td></tr>
-<tr><td>Улица</td><td><code>&lt;input type="text" id="<b>ziptastic_street</b>"&gt;</code></td></tr>
-<tr><td>Индекс</td><td><code>&lt;input type="text" id="<b>ziptastic_zip</b>"&gt;</code></td></tr>
+<tr><td>Улица</td><td><code>&lt;input type="text" id="<b>adresator_street</b>"&gt;</code></td></tr>
+<tr><td>Индекс</td><td><code>&lt;input type="text" id="<b>adresator_zip</b>"&gt;</code></td></tr>
 <tr><td></td><td><code></code></td></tr>
-<tr><td>Дом (строение, блок, ...)</td><td><code>&lt;input type="text" id="<b>ziptastic_building</b>"&gt;</code></td></tr>
-<tr><td>Город</td><td><code>&lt;input type="text" id="<b>ziptastic_city</b>"&gt;</code></td></tr>
-<tr><td>Район</td><td><code>&lt;input type="text" id="<b>ziptastic_area</b>"&gt;</code></td></tr>
-<tr><td>Регион (область, край, ...)</td><td><code>&lt;input type="text" id="<b>ziptastic_region</b>"&gt;</code></td></tr>
+<tr><td>Дом (строение, блок, ...)</td><td><code>&lt;input type="text" id="<b>adresator_building</b>"&gt;</code></td></tr>
+<tr><td>Город</td><td><code>&lt;input type="text" id="<b>adresator_city</b>"&gt;</code></td></tr>
+<tr><td>Район</td><td><code>&lt;input type="text" id="<b>adresator_area</b>"&gt;</code></td></tr>
+<tr><td>Регион (область, край, ...)</td><td><code>&lt;input type="text" id="<b>adresator_region</b>"&gt;</code></td></tr>
 <tr><td></td><td><code></code></td></tr>
 </table>
         <br>
       <li> Пример: форма слева задаётся следующим образом:<br>
 <textarea rows="9" cols="60" style="font-family: monospace; font-size: 12px; border: 0" spellcheck="false"><pre>
-<input type="text" id="ziptastic_street"> улица
-<input type="text" id="ziptastic_zip"   > индекс
+<input type="text" id="adresator_street"> улица
+<input type="text" id="adresator_zip"   > индекс
 <hr width="270px" align="left">
-<input type="text" id="ziptastic_building" > дом, строение
-<input type="text" id="ziptastic_city"     > город
-<input type="text" id="ziptastic_area"     > район
-<input type="text" id="ziptastic_region"   > область, край
+<input type="text" id="adresator_building" > дом, строение
+<input type="text" id="adresator_city"     > город
+<input type="text" id="adresator_area"     > район
+<input type="text" id="adresator_region"   > область, край
 </pre></textarea>
     </ol>
   </div>
@@ -103,21 +103,21 @@
       <li>Необходимо прочитать содержимое вкладки "НЕ знаю Javascript"</a>
       <li>Базовый навык JS предоставляет некоторое удобство в конфигурировании.<br>
           В частности, можно указать свои идентификаторы полей ввода
-          для отслеживания ziptastic.
-        <p>Делается это следующим образом. Внутри HEAD, после подключения <i>jquery.ziptastic.js</i>,
-           объявляется переменная <code>ZIPTASTIC_OPTIONS</code>, в которой указывается, какие поля на странице использовать для авто-заполнения. Например,<br>
+          для отслеживания adresator.
+        <p>Делается это следующим образом. Внутри HEAD, после подключения <i>jquery.adresator.js</i>,
+           объявляется переменная <code>ADRESATOR_OPTIONS</code>, в которой указывается, какие поля на странице использовать для авто-заполнения. Например,<br>
 <textarea rows="14" cols="95" style="font-family: monospace; font-size: 12px; border: 0" spellcheck="false">
 <head>
 ...
   <script type="text/javascript">
-    var ZIPTASTIC_OPTIONS =
+    var ADRESATOR_OPTIONS =
     {
       city:"#gorod",        // HTML-поле для города  - <input type="text" id="gorod">
       zipcode:"#index",     // HTML-поле для индекса - <input type="text" id="index">
       region:"#oblast",     // HTML-поле для региона - <input type="text" id="oblast">
       street:"#ul",         // HTML-поле для улицы   - <input type="text" id="ul">
       building:"#dom",      // HTML-поле для № дома  - <input type="text" id="dom">
-      area:""               // указание ziptastic не заполнять автоматически поле района
+      area:""               // указание adresator не заполнять автоматически поле района
     };
   </script>
 </head></textarea>
@@ -129,22 +129,22 @@
   <div id="tabs-3">
     <ol>
       <li>Содержимое этого раздела предполагает знакомство с содержанием других табов.
-      <li>Данный jquery-плагин (<a href="jquery.ziptastic.js" target="_blank"><i>jquery.ziptastic.js</i></a>) реализован с использованием autocomplete.
+      <li>Данный jquery-плагин (<a href="jquery.adresator.js" target="_blank"><i>jquery.adresator.js</i></a>) реализован с использованием autocomplete.
           Он использует данные, отдаваемые сервисом<br>
-<code>http://ziptastic.ru/api/v1/?q=<i>улица</i>|<i>индекс</i></code><br>
+<code>http://adresator.ru/api/v1/?q=<i>улица</i>|<i>индекс</i></code><br>
 например<br>
-<code><a href="http://ziptastic.ru/api/v1/?q=сове" target="_blank">http://ziptastic.ru/api/v1/?q=сове</a></code><br>
-<code><a href="http://ziptastic.ru/api/v1/?q=432063" target="_blank">http://ziptastic.ru/api/v1/?q=432063</a></code>
-      <li>Упомянутый jquery-плагин и php-service написаны на скорую руку "для проверки концепции", но вроде работают. Пожелания и дополнения приветствуются, особенно в виде <code>pull request</code> в <a href="http://github.com/relev/ziptastic">репозиторий на github</a>, или написании других способов отображения результатов, возвращаемых сервисом.
+<code><a href="http://adresator.ru/api/v1/?q=сове" target="_blank">http://adresator.ru/api/v1/?q=сове</a></code><br>
+<code><a href="http://adresator.ru/api/v1/?q=432063" target="_blank">http://adresator.ru/api/v1/?q=432063</a></code>
+      <li>Упомянутый jquery-плагин и php-service написаны на скорую руку "для проверки концепции", но вроде работают. Пожелания и дополнения приветствуются, особенно в виде <code>pull request</code> в <a href="http://github.com/relev/adresator">репозиторий на github</a>, или написании других способов отображения результатов, возвращаемых сервисом.
       <li>В случае необходимости можно обслуживать несколько независимых форм ввода на одной странице,
           вызвав необходимое число раз инициализацию плагина с нужными параметрами<br>
 <textarea rows="3" cols="35" style="font-family: monospace; font-size: 12px; border: 0" spellcheck="false">
 jQuery(function() {
     jQuery.zipstatic(params);
 });</textarea><br>
-          где <code>params</code> имеет структуру, идентичную <code>ZIPTASTIC_OPTIONS</code> (см. предыдущий таб).<br>
-          Первый вызов этого кода с <code>ZIPTASTIC_OPTIONS</code> в качестве параметра осуществляется плагином при загрузке.
-      <li>Если в хеше <code>ZIPTASTIC_OPTIONS</code> ключу <code>callback</code> присвоена какая-либо функция, она будет вызвана при авто-заполнении с данными оного в виде хеша.
+          где <code>params</code> имеет структуру, идентичную <code>ADRESATOR_OPTIONS</code> (см. предыдущий таб).<br>
+          Первый вызов этого кода с <code>ADRESATOR_OPTIONS</code> в качестве параметра осуществляется плагином при загрузке.
+      <li>Если в хеше <code>ADRESATOR_OPTIONS</code> ключу <code>callback</code> присвоена какая-либо функция, она будет вызвана при авто-заполнении с данными оного в виде хеша.
       <li>HTTP API (TODO: дописать!)
       <li>В ближайшем будущем планируется переехать с MySQL на Redis, тогда задержка ответов станет ещё короче.
       <li>Сервис хостится на Amazon, со всеми плюсами и минусами.

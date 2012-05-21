@@ -39,10 +39,10 @@ SetOutputFilter DEFLATE
 RewriteEngine On
 
 RewriteCond %{REQUEST_URI} ^/api/v1
-RewriteRule .* /ziptastic.php?%{QUERY_STRING} [L]
+RewriteRule .* /adresator.php?%{QUERY_STRING} [L]
 
 RewriteCond %{REQUEST_URI} ^/?$
-RewriteRule .* /ziptastic_street.html [L]
+RewriteRule .* /adresator_demo.html [L]
 
 # close access for Git directory
 RewriteRule ^(.*/)?\.git/ - [F]

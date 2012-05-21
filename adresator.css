@@ -1,21 +1,21 @@
-.ziptastic-city, .ziptastic-zipcode {
+.adresator-city, .adresator-zipcode {
     text-decoration: underline;
     cursor: pointer;
 }
 
-.ziptastic-hover {
+.adresator-hover {
     background-color: #bad6ff;
 }
 
-.ziptastic-street, .ziptastic-zipcode-list {
+.adresator-street, .adresator-zipcode-list {
     color: #777777;
 }
 
-.ziptastic-city {
+.adresator-city {
     color: #2f61a8;
 }
 
-.ziptastic-street strong {
+.adresator-street strong {
     color: #000000;
 }
 

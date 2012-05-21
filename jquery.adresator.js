@@ -1,18 +1,18 @@
-var ZIPTASTIC_OPTIONS;
+var ADRESATOR_OPTIONS;
 
 (function($) {
     $.extend({
         zipstatic: function(options) {
 
-            var serviceUrl = "http://ziptastic.ru/api/v1";
+            var serviceUrl = "http://adresator.com/api/v1";
             var opt = $.extend({
                 callback: function(e) {},
-                zipcode: "#ziptastic_zip",
-                street: "#ziptastic_street",
-                region: "#ziptastic_region",
-                autonomy: "#ziptastic_autonomy",
-                city: "#ziptastic_city",
-                building: "#ziptastic_building"
+                zipcode: "#adresator_zip",
+                street: "#adresator_street",
+                region: "#adresator_region",
+                area: "#adresator_area",
+                city: "#adresator_city",
+                building: "#adresator_building"
             },( options || {} ) );
             var getStreetTypeRegexp = function() {
                 var type = "ул|пер|пл|проезд|б-р|тер|туп|аллея|ш|пр-кт|стр|ст|мкр|наб|парк|дор|сквер|спуск";
@@ -58,8 +58,8 @@ var ZIPTASTIC_OPTIONS;
             if( typeof opt.zipcode  == "string" )
                 opt.zipcode = $(opt.zipcode);
 
-            if( typeof opt.autonomy  == "string" )
-                opt.autonomy = $(opt.autonomy);
+            if( typeof opt.area  == "string" )
+                opt.area = $(opt.area);
 
             if( typeof opt.region  == "string" )
                 opt.region = $(opt.region);
@@ -92,7 +92,7 @@ var ZIPTASTIC_OPTIONS;
                     scrollHeight: 300,
                     width: 500,
                     formatItem: function(data, i, max, value) {
-                        var fullStreetName = '<span class="ziptastic-street-type">' + data.type_short + '</span> ' + value;
+                        var fullStreetName = '<span class="adresator-street-type">' + data.type_short + '</span> ' + value;
                         var fullStreetNameText = data.type_short + " "+ value;
                         var links = data.localities.split(";");
                         var locations = [];
@@ -112,23 +112,23 @@ var ZIPTASTIC_OPTIONS;
                             var zipcodes = [];
                             if( locations[i].length > 1 ) {
                                 for(var k in locations[i]) {
-                                    zipcodes.push('<span class="ziptastic-zipcode">' + locations[i][k] + '</span>');
+                                    zipcodes.push('<span class="adresator-zipcode">' + locations[i][k] + '</span>');
                                 }
-                                zipcodes = ' <span class="ziptastic-zipcode-list">(' + zipcodes.join(', ') + ')</span>';
+                                zipcodes = ' <span class="adresator-zipcode-list">(' + zipcodes.join(', ') + ')</span>';
                             }
 
-                            cities.push( '<span class="ziptastic-city">' + i + '</span>' + zipcodes );
+                            cities.push( '<span class="adresator-city">' + i + '</span>' + zipcodes );
                         }
 
-                        var ziptasticBox = $(document.createElement("span")).addClass("ziptastic-box");
-                        var ziptasticSelector = $(document.createElement("span")).addClass("ziptastic-selector");
+                        var adresatorBox = $(document.createElement("span")).addClass("adresator-box");
+                        var adresatorSelector = $(document.createElement("span")).addClass("adresator-selector");
 
-                        ziptasticBox.append('<span class="ziptastic-street">' + fullStreetName + ': </span>');
+                        adresatorBox.append('<span class="adresator-street">' + fullStreetName + ': </span>');
 
-                        ziptasticSelector.append(cities.join(", "));
-                        ziptasticBox.append(ziptasticSelector);
+                        adresatorSelector.append(cities.join(", "));
+                        adresatorBox.append(adresatorSelector);
 
-                        ziptasticSelector.find("span").click(function(e) {
+                        adresatorSelector.find("span").click(function(e) {
                             e.stopPropagation();
                             opt.street.trigger( $.Event("keydown",  { keyCode: 27 }) )
 
@@ -138,14 +138,14 @@ var ZIPTASTIC_OPTIONS;
                                 showData(data[0], fullStreetNameText);
                         });
 
-                        ziptasticSelector.find(".ziptastic-zipcode, .ziptastic-city")
+                        adresatorSelector.find(".adresator-zipcode, .adresator-city")
                                          .hover(function(){
-                                            $(this).addClass("ziptastic-hover");
+                                            $(this).addClass("adresator-hover");
                                          }, function(){
-                                            $(this).removeClass("ziptastic-hover");
+                                            $(this).removeClass("adresator-hover");
                                          });
 
-                        return  ziptasticBox;
+                        return  adresatorBox;
                     },
                     formatResult: function(data, value) {
                       return value;
@@ -188,7 +188,7 @@ var ZIPTASTIC_OPTIONS;
 })(jQuery);
 
 jQuery(function() {
-    jQuery.zipstatic(ZIPTASTIC_OPTIONS);
+    jQuery.zipstatic(ADRESATOR_OPTIONS);
 });
 
 /*
