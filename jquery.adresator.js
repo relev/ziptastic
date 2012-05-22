@@ -44,12 +44,15 @@ var ADRESATOR_OPTIONS;
                 if( street && opt.street.length )
                     opt.street.val( street );
 
+                next = false;
                 if( street && opt.building )
-                    opt.building.trigger("focus");
+                    next = opt.building;
                 else if( opt.street && opt.street.val().length == 0 )
-                    opt.street.trigger("focus");
+                    next = opt.street;
                 else if( opt.building && opt.building.val().length == 0 )
-                    opt.building.trigger("focus");
+                    next = opt.building;
+                if ( next )
+                    next.trigger("focus");
 
                 $.isFunction(opt.callback) && opt.callback(data);
             };
